@@ -1,6 +1,6 @@
-## Creation, Coordination, and Management of tasks
+# Creation, Coordination, and Management of tasks
 <p>Employees can create and assign tasks between other employees (Supervisor, junior staff, etc)</p>
-<p>Taks - Public or private</p>
+## Taks - Public or private
 <ul>
     <li>Track assigned tasks</li>
     <li>View past tasks</li>
