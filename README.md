@@ -1,25 +1,25 @@
 ## Creation, Coordination, and Management of tasks
 <p>Employees can create and assign tasks between other employees (Supervisor, junior staff, etc)</p>
 <p>Taks - Public or private</p>
-<ol>
+<ul>
     <li>Track assigned tasks</li>
     <li>View past tasks</li>
-</ol>
+</ul>
 
 <p>Daily Summaries</p>
-<ol>
+<ul>
     <li>Tasks received</li>
     <li>Tasks completed</li>
     <li>Tasks pending</li>
-</ol>
+</ul>
 
 <p>Generate reports</p>
-<ol>
+<ul>
     <li>Supervisor generated reports</li>
-</ol>
+</ul>
 
 <p>Employee performance tracking</p>
-<ol>
+<ul>
     <li>Open tasks</li>
     <li>Closed tasks</li>
-</ol>
+</ul>
