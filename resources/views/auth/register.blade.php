@@ -28,26 +28,28 @@
                 <label for="eid">Employee ID</label>
                 <input type="text" name="eid" class="form-control" placeholder="23476271"/>
             </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="dept">Department</label>
+                    <select name="department" class="form-control">
+                        <option value="sales">Sales</option>
+                        <option value="it">I.T</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="hr">Human Resources</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="name">Designation</label>
+                    <select name="designation" class="form-control">
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid-level</option>
+                        <option value="senior">Senior</option>
+                    </select>
+                </div>
+            </div>
             
-            <div class="form-group">
-                <label for="dept">Department</label>
-                <select name="department">
-                    <option value="sales">Sales</option>
-                    <option value="it">I.T</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="hr">Human Resources</option>
-                </select>
-            </div>
-        
-            <div class="form-group">
-                <label for="name">Designation</label>
-                <select name="designation" id="">
-                    <option value="junior">Junior</option>
-                    <option value="mid">Mid-level</option>
-                    <option value="senior">Senior</option>
-                </select>
-            </div>
-        
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" class="form-control" placeholder="Enter password">
@@ -55,16 +57,6 @@
                 <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
             </div>
-        
-            <!--
-            <div class="form-group">
-                <label for="repeat_password">Repeat Password</label>
-                <input type="password" name="repeat_password" class="form-control" placeholder="Repeat Password">
-                @if($errors->has('repeat_password'))
-                <span class="text-danger">{{ $errors->has('repeat_password') }}</span>
-                @endif
-            </div>
-            -->
             
             <button type="submit" class="btn btn-primary">Log in</button>
             <button type="reset" class="btn btn-secondary">Cancel</button>
