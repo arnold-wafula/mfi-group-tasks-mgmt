@@ -5,16 +5,56 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="">
+<form method="POST" action="{{ route('login.authenticate') }}">
+        @csrf
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" placeholder="Name"/>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Email"/>
+            @if ($errors->has('email'))
+            <span class="text-danger">{{ $errors->first('email') }}</span>
+            @endif
+        </div>
         <div>
             <label for="eid">Employee ID</label>
             <input type="text" name="eid" placeholder="23476271"/>
         </div>
         <div>
+            <label for="dept">Department</label>
+            <select name="department">
+                <option value="sales">Sales</option>
+                <option value="it">I.T</option>
+                <option value="marketing">Marketing</option>
+                <option value="hr">Human Resources</option>
+            </select>
+        </div>
+        <div>
+            <label for="name">Designation</label>
+            <select name="designation" id="">
+                <option value="junior">Junior</option>
+                <option value="mid">Mid-level</option>
+                <option value="senior">Senior</option>
+            </select>
+        </div>
+        <div>
             <label for="password">Password</label>
             <input type="password" name="password" placeholder="Enter password">
+            @if($errors->has('password'))
+            <span>{{ $errors->first('password') }}</span>
+            @endif
         </div>
-        <button type="submit">Register</button>
+        <div>
+            <label for="repeat_password">Repeat Password</label>
+            <input type="password" name="repeat_password" placeholder="Repeat Password">
+            @if($errors->has('repeat_password'))
+            <span>{{ $errors->has('repeat_password') }}</span>
+            @endif
+        </div>
+
+        <button type="submit">Log in</button>
         <button type="reset">Cancel</button>
     </form>
 </body>
