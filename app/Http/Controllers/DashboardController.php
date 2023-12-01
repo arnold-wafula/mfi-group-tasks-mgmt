@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function show() {
+
+    public function __construct() {
+        $this->middleware('guest')->except([
+            ''
+        ]);
+    }
+    public function dashboard() {
         if(Auth::check()) {
             return view('auth.dashboard');
         }
