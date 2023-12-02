@@ -24,13 +24,19 @@ class LoginController extends Controller
         ]);
 
         if(Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('dashboard')->withSuccess('Successfully logged in');
+            // Regenerate session after log in confirmed
+            session()->regenerate();
+
+            // Successfully logged in
+            session()->flash('success', 'Successfully logged in');
+
+            return redirect()->route('dashboard');
         }
 
-        return back()->withErrors([
-            'employee_id' => 'Invalid employee id'
-        ])->onlyInput('employee_id');
+        // Error message for employee id
+        session()->flash('error', 'Invalid employee id');
+
+        return back()->withInput(['employee_id']);
     }
 
     public function logout(Request $request) {

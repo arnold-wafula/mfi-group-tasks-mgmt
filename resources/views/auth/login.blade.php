@@ -9,13 +9,13 @@
     </head>
     <body class="bg-dark">
         <div class="container mt-5">
-            <form method="POST" action="{{ route('login') }}" class="col-md-6 mx-auto bg-white p-4 rounded">
+            <form method="POST" action="{{ route('login.authenticate') }}" class="col-md-6 mx-auto bg-white p-4 rounded">
                 @csrf
                 <div class="form-group">
-                    <label for="eid">Employee ID</label>
-                    <input type="text" name="eid" class="form-control" placeholder="23476271"/>
-                    @if($errors->has('eid'))
-                    <span class="text-danger">{{ $errors->first('eid') }}</span>
+                    <label for="employee_id">Employee ID</label>
+                    <input type="text" name="employee_id" class="form-control" placeholder="23476271"/>
+                    @if($errors->has('employee_id'))
+                    <span class="text-danger">{{ $errors->first('employee_id') }}</span>
                     @endif
                 </div>
                 

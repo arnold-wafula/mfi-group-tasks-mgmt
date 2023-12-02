@@ -25,13 +25,13 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'designation' => 'required|string',
             'department' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         // Create a new user
         User::create([
-            'employee_id' => $request->employee_id,
             'name' => $request->name,
+            'employee_id' => $request->employee_id,
             'email' => $request->email,
             'designation' => $request->designation,
             'department' => $request->department,

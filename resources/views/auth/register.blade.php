@@ -9,11 +9,14 @@
 </head>
 <body class="bg-dark">
     <div class="container mt-5">
-        <form method="POST" action="{{ route('register') }}" class="col-md-6 mx-auto bg-white p-4 rounded">
+        <form method="POST" action="{{ route('register.store') }}" class="col-md-6 mx-auto bg-white p-4 rounded">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Name"/>
+                @if ($errors->has('name'))
+                <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif
             </div>
             
             <div class="form-group">
@@ -25,13 +28,16 @@
             </div>
             
             <div class="form-group">
-                <label for="eid">Employee ID</label>
-                <input type="text" name="eid" class="form-control" placeholder="23476271"/>
+                <label for="employee_id">Employee ID</label>
+                <input type="text" name="employee_id" class="form-control" placeholder="23476271"/>
+                @if ($errors->has('employee_id'))
+                <span class="text-danger">{{ $errors->first('employee_id') }}</span>
+                @endif
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="dept">Department</label>
+                    <label for="department">Department</label>
                     <select name="department" class="form-control">
                         <option value="sales">Sales</option>
                         <option value="it">I.T</option>
@@ -41,7 +47,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label for="name">Designation</label>
+                    <label for="designation">Designation</label>
                     <select name="designation" class="form-control">
                         <option value="junior">Junior</option>
                         <option value="mid">Mid-level</option>
@@ -53,12 +59,20 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" class="form-control" placeholder="Enter password">
-                @if($errors->has('repeat_password'))
+                @if($errors->has('password'))
+                <span class="text-danger">{{ $errors->first('password') }}</span>
+                @endif
+            </div>
+
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
+                @if($errors->has('password'))
                 <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
             </div>
             
-            <button type="submit" class="btn btn-primary">Log in</button>
+            <button type="submit" class="btn btn-primary">Register</button>
             <button type="reset" class="btn btn-secondary">Cancel</button>
         </form>
     </div>
