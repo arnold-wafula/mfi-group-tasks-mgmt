@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Task\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('register');
+    return redirect()->route('login');
 });
 
 
@@ -34,3 +35,13 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
+
+// Task routes
+// Create a new task
+Route::post('/task', [TaskController::class, 'create'])->name('task.create');
+
+// Display created tasks
+Route::get('/task', [TaskController::class, 'show'])->name('task.show');
+
+// Delete a task
+Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('task.delete');

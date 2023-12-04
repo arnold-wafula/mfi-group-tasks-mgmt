@@ -11,9 +11,14 @@
     <div class="container mt-5">
         <form method="POST" action="{{ route('register.store') }}" class="col-md-6 mx-auto bg-white p-4 rounded">
             @csrf
+            <!-- Logo image -->
+            <div class="text-center mb-4">
+                <img src="mfi.jpg" width="50px" height="50px" alt="Logo">
+            </div>
+
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Name"/>
+                <input type="text" name="name" class="form-control" placeholder="John Doe"/>
                 @if ($errors->has('name'))
                 <span class="text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -21,7 +26,7 @@
             
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" placeholder="Email"/>
+                <input type="email" name="email" class="form-control" placeholder="john.doe@mfi.com"/>
                 @if ($errors->has('email'))
                 <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
@@ -29,7 +34,7 @@
             
             <div class="form-group">
                 <label for="employee_id">Employee ID</label>
-                <input type="text" name="employee_id" class="form-control" placeholder="23476271"/>
+                <input type="text" name="employee_id" class="form-control" placeholder="M-108"/>
                 @if ($errors->has('employee_id'))
                 <span class="text-danger">{{ $errors->first('employee_id') }}</span>
                 @endif
@@ -39,10 +44,12 @@
                 <div class="form-group col-md-6">
                     <label for="department">Department</label>
                     <select name="department" class="form-control">
+                        <option value="marketing">Marketing</option>
+                        <option value="finance">Finance</option>
                         <option value="sales">Sales</option>
                         <option value="it">I.T</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="hr">Human Resources</option>
+                        <option value="opm">Operations Management</option>
+                        <option value="hr">Human Resource</option>
                     </select>
                 </div>
 
@@ -58,7 +65,7 @@
             
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter password">
+                <input type="password" name="password" class="form-control" placeholder="*******">
                 @if($errors->has('password'))
                 <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
@@ -66,14 +73,17 @@
 
             <div class="form-group">
                 <label for="password">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
+                <input type="password" name="password_confirmation" class="form-control" placeholder="*******">
                 @if($errors->has('password'))
                 <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
             </div>
             
-            <button type="submit" class="btn btn-primary">Register</button>
-            <button type="reset" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+
+            <div class="mt-3">
+                <p>Already have a tasks account? Log in <a href="{{ route('login.authenticate') }}">here</a></p>
+            </div>
         </form>
     </div>
 
