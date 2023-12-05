@@ -136,6 +136,7 @@
                         <th>% done</th>
                         <th>Created By</th>
                         <th>Assigned to</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,6 +156,18 @@
                             @empty
                             No Assigned users
                             @endforelse
+                        </td>
+                        <td>
+                            @if(Auth::user()->designation !== 'junior')
+                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-warning">
+                                Edit
+                            </a>
+                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

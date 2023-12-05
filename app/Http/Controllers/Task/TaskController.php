@@ -10,20 +10,21 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
 
+    // Show a list of tasks on the dashboard
     public function index() {
-        //$tasks = Task::all();
+        // Fetch tasks along with assigned users and creators
         $tasks = Task::with(['assignedTo', 'createdBy'])->get();
         return view('tasks.index', compact('tasks'));
     }
 
+    // Display the form for creating a new task
     public function create() {
-        //$users = User::all(); // Fetch all users for the assignment dropdown
+        // Fetch users (excluding the current user) for task assignment
         $users = User::where('id', '!=', auth()->id())->get();
         return view('tasks.create', compact('users'));
-
-        //return view('tasks.create');
     }
 
+    // Store a new task in the database
     public function store(Request $request) {
         // Validate the input data
         $request->validate([
@@ -36,11 +37,7 @@ class TaskController extends Controller
             'completed' => 'required|string'
         ]);
 
-        // Create the task
-        //Task::create($request->all());
-
-        //$task = Task::create($request->except('assigned_to'));
-
+        // Create a new task with input data and link it to the creator
         $task = Task::create([
             'task_name' => $request->input('task_name'),
             'description' => $request->input('description'),
@@ -50,18 +47,22 @@ class TaskController extends Controller
             'created_by' => auth()->id()
         ]);
 
-        // Attach users to the task
+        // Attach assigned users to the task
         $task->users()->attach($request->input('assigned_to'));
-
-        //return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
         
         return redirect()->route('dashboard')->with('success', 'Task created successfully.');
     }
 
+    // Display the form for editing an existing task
     public function edit(Task $task) {
-        return view('tasks.edit', compact($task));
+        // Fetch users for task assignment
+        // Should exclude current user
+        $users = User::where('id', '!=', auth()->id())->get();
+
+        return view('tasks.edit', compact('task', 'users'));
     }
 
+    // Update an existing task in the database
     public function update(Request $request, Task $task) {
         // Validate the input data
         $request->validate([
@@ -74,14 +75,16 @@ class TaskController extends Controller
             'completed' => 'required|string'
         ]);
 
-        // Update the task
+        // Update the task with the new input data
         $task->update($request->all());
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
     }
 
+    // Delete an existing task from the database
     public function destroy(Task $task) {
         // Delete the task
+        $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
