@@ -12,12 +12,40 @@ class Task extends Model
     protected $fillable = [
         'task_name',
         'description',
+        'priority',
         'due_date',
         'assigned_to',
-        'completed'
+        'completed',
+        'created_by',
     ];  
 
+    /**
+     * Many-to-many relationship to get the users assigned to this task.
+     * The 'task_user' table is used as an intermediate table.
+     */
+    public function users() {
+        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
+    }
+
+     /**
+     * Many-to-many relationship to get the users assigned to this task.
+     * The 'task_user' table is used as an intermediate table.
+     */
     public function assignedTo() {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
+    }
+
+    /**
+     * Many-to-one relationship to get the user who created this task.
+     */
+    public function createdBy() {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Many-to-one relationship to get the creator with only the 'name' attribute.
+     */
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by', 'name');
     }
 }
