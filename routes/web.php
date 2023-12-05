@@ -34,14 +34,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 // Dashboard routes
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
-
-// Task routes
-// Create a new task
-Route::post('/task', [TaskController::class, 'create'])->name('task.create');
-
-// Display created tasks
-Route::get('/task', [TaskController::class, 'show'])->name('task.show');
-
-// Delete a task
-Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('task.delete');
