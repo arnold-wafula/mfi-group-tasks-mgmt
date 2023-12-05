@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
 
     public function __construct() {
         $this->middleware('auth');
-
-        /*$this->middleware('guest')->except([
-            ''
-        ]);*/
     }
+
     public function dashboard() {
-        return view('auth.dashboard');
+        //$users = User::all(); // Fetch all users, replace with your actual query
 
-        /*if(Auth::check()) {
-            return view('auth.dashboard');
-        }
+        //return view('auth.dashboard', compact('users'));
 
-        return redirect()->route('login')->withErrors(['employee_id' => 'Log in to access the dashboard'])->onlyInput('employee_id');*/
+        $tasks = Task::all();
+        return view('auth.dashboard', compact('tasks'));
     }
 }
