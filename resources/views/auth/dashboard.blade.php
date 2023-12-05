@@ -26,118 +26,154 @@
             margin-left: 250px;
             padding: 20px;
         }
+
+        #navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: FFFFFF;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        .bg-light {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">
             <img src="mfi.jpg" width="50px" height="50px" alt="logo">
             MFI TASKS MANAGEMENT
         </a>
+        
         <div class="navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <span class="nav-link"></span>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-danger logout-btn" onclick="logout()">Logout</button>
+                    <div class="nav-item dropdown">
+                        <span class="nav-link user-dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="user.jpg" width="30px" height="30px" alt="user-icon">
+                            {{ Auth::user()->employee_id }}
+                        </span>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
-
         </div>
     </nav>
-    <div id="sidebar" class="bg-light">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link text-black sidebar-link" data-target="projects" href="#">Projects</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black sidebar-link" data-target="my-projects" href="#">My Projects</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black sidebar-link" data-target="issues" href="#">Issues</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black sidebar-link" data-target="user-boards" href="#">User Boards</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-black sidebar-link" data-target="tasks-follow-up" href="#" onclick="loadContent('tasks-follow-up')">Task & Follow Up</a>
-            </li>
-        </ul>
-    </div>
 
-    <!-- Content -->
-    <div id="content">
-        <!-- Your dashboard content goes here -->
-        <div id="dynamic-content">
-            <!-- Content loaded dynamically will be displayed here -->
-            <h1>Welcome to the Employee Dashboard</h1>
-            <button type="button" class="btn btn-primary" onclick="{{ route('task.create') }}">Create New Task</button>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebar">
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="{{ route('dashboard') }}">Projects</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard') }}">My Projects</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard') }}">Issues</a>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-toggle" href="#" id="tasksDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Task & Follow Up
+                        </a>
+                        
+                        <ul class="dropdown-menu" aria-labelledby="tasksDropdown">
+                            <li>
+                                <a class="dropdown-item dropdown-toggle" href="#" id="nestedDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Task & User Boards
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nestedDropdown">
+                                    <li><a class="dropdown-item" href="#">Tasks</a></li>
+                                    <li><a class="dropdown-item" href="#">User Boards</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <!-- Add your dashboard components, charts, etc. here -->
     </div>
 
+    <div id="content">
+        <div class="bg-light">
+            @if(Auth::user()->designation !== 'junior')
+            <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Create New Task</a>
+            @endif 
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Task Key</th>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>% done</th>
+                        <th>Created By</th>
+                        <th>Assigned to</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tasks as $task)
+                    <tr>
+                        <td>{{ $task->id }}</td>
+                        <td>{{ $task->task_name }}</td>
+                        <td>{{ $task->description }}</td>
+                        <td>{{ $task->priority }}</td>
+                        <td>{{ $task->due_date }}</td>
+                        <td>{{ $task->completed }}</td>
+                        <td>% done</td>
+                        <td>{{ $task->createdBy->name }}</td>
+                        <td>
+                            @forelse ($task->assignedTo as $user)
+                            {{ $user->name }} - {{ $user->designation }}
+                            @empty
+                            No Assigned users
+                            @endforelse
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>   
+            
     <script>
-        function logout() {
-            window.location.href = '{{ route("logout") }}';
-        }
-
-        document.querySelectorAll('.sidebar-link').forEach(function(link) {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                var target = this.getAttribute('data-target');
-                loadContent(target);
-            });
-        });
-
-        function loadContent(target) {
-        switch(target) {
-            case 'projects':
-                document.getElementById('content').innerHTML = '<h1>Projects Content</h1>';
-                break;
-
-            case 'my-projects':
-                document.getElementById('content').innerHTML = '<h1>My Projects Content</h1>';
-                break;
-            
-            case 'issues':
-                document.getElementById('content').innerHTML = '<h1>Issues Content</h1>';
-                break;
-            
-            case 'user-boards':
-                document.getElementById('content').innerHTML = '<h1>User Boards Content</h1>';
-                break;
-
-            case 'tasks-follow-up':
-                // Fetch content from "task" route using AJAX
-                var url = '{{ route("task.show") }}';
-
-                $.ajax({
-                    url: url,
-                    method: 'GET',
-                    dataType: 'html', // Specify the expected data type
-                    success: function(response) {
-                        // Update content with fetched data
-                        document.getElementById('dynamic-content').innerHTML = response;
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error fetching content:", status, error);
-                        // Handle errors
-                        document.getElementById('dynamic-content').innerHTML = "<p>Error loading content.</p>"
-                    }
-                });
-                break;
-
-            default:
-                document.getElementById('content').innerHTML = '<h1>Welcome to the Employee Dashboard</h1>';
-        }
+    function logout() {
+        window.location.href = '{{ route("logout") }}';
     }
     </script>
+    
 </body>
 </html>
