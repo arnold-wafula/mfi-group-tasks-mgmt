@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('task_name');
             $table->text('description');
+            $table->string('priority', )->default('medium');
             $table->dateTime('due_date');
-            $table->unsignedBigInteger('assigned_to');
-            $table->boolean('completed')->default(false);
+            $table->unsignedBigInteger('assigned_to')->nullable();
+            $table->string('completed')->default('in_progress');
+            $table->string('created_by')->nullable();
             $table->timestamps();
 
             $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
