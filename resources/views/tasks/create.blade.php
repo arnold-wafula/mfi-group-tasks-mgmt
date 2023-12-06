@@ -10,7 +10,7 @@
                 
                 <div class="form-group">
                     <label for="task_name">Task Name</label>
-                    <input type="text" name="task_name" class="form-control" placeholder="Send reports by 10:00 A.M"/>
+                    <input type="text" name="task_name" class="form-control" placeholder="Task 1"/>
                     @if($errors->has('task_name'))
                     <span class="text-danger">{{ $errors->first('task_name') }}</span>
                     @endif
@@ -18,7 +18,7 @@
                 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" name="description" class="form-control" placeholder="Create a comprehensive weekly report and submit by said time"/>
+                    <input type="text" name="description" class="form-control" placeholder="Create a comprehensive weekly report and submit by 10:00 AM Friday"/>
                     @if($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                     @endif
