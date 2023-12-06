@@ -78,21 +78,6 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        // Heroku environment
-        'heroku_pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('HEROKU_DB_HOST', 'ec2-44-212-250-48.compute-1.amazonaws.com'),
-            'port' => env('HEROKU_DB_PORT', '5432'),
-            'database' => env('HEROKU_DB_DATABASE', 'compute-'),
-            'username' => env('HEROKU_DB_USERNAME', 'kjjvotukomnukd'),
-            'password' => env('HEROKU_DB_PASSWORD', 'e81541d9e1b280b965f46beaced8a53b962f1170bbb91a7091396ddc20566544'),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'search_path' => 'public',
-            'sslmode' => 'prefer',
-        ],
-
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
