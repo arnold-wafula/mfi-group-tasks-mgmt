@@ -11,7 +11,7 @@
                 
                 <div class="form-group">
                     <label for="task_name">Task Name</label>
-                    <input type="text" name="task_name" class="form-control" placeholder="Send reports by 10:00 A.M"/>
+                    <input type="text" name="task_name" class="form-control" value="{{ old('task_name', $task->task_name) }}" placeholder="Task 1">
                     @if($errors->has('task_name'))
                     <span class="text-danger">{{ $errors->first('task_name') }}</span>
                     @endif
@@ -19,24 +19,15 @@
                 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" name="description" class="form-control" placeholder="Create a comprehensive weekly report and submit by said time"/>
+                    <input type="text" name="description" class="form-control" value="{{ old('description', $task->description) }}" placeholder="Create a comprehensive weekly report and submit by said time"/>
                     @if($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                     @endif
                 </div>
                 
                 <div class="form-group">
-                    <label for="priority">Priority</label>
-                    <select name="priority" class="form-control">
-                        <option value="high">High</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
                     <label for="due_date">Due date</label>
-                    <input type="date" name="due_date" class="form-control"/>
+                    <input type="datetime-local" name="due_date" class="form-control" value="{{ old('due_date', $task->due_date) }}"/>
                     @if($errors->has('due_date'))
                     <span class="text-danger">{{ $errors->first('due_date') }}</span>
                     @endif
@@ -47,7 +38,9 @@
                     <select name="assigned_to[]" class="form-control" multiple>
                         @foreach($users as $user)
                         @if ($user->employee_id !== Auth::user()->employee_id) <!--only display other users in the list-->
-                        <option value="{{ $user->id }}">{{ $user->name }}</option> 
+                        <option value="{{ $user->id }}" {{ in_array($user->id, old('assigned_to', $task->assignedTo->pluck('id')->toArray()) ?: []) ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
                         @endif
                         @endforeach
                     </select>
@@ -56,9 +49,11 @@
                 <div class="form-group">
                     <label for="completed">Status</label>
                     <select name="completed" class="form-control">
-                        <option value="started">Started</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="completed">Completed</option>
+                        @foreach(['started', 'in_progress', 'completed'] as $status)
+                            <option value="{{ $status }}" {{ old('completed', $task->completed) == $status ? 'selected' : '' }}>
+                                {{ ucfirst($status) }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 
