@@ -31,7 +31,7 @@ class TaskController extends Controller
             'task_name' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:high,medium,low',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date_format:Y-m-d\TH:i', //date_format to include time changes
             'assigned_to' => 'required|array',
             'assigned_to.*' => 'exists:users,id',
             'completed' => 'required|string'
@@ -69,16 +69,27 @@ class TaskController extends Controller
             'task_name' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:high,medium,low',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date_format:Y-m-d\TH:i',
             'assigned_to' => 'required|array',
             'assigned_to.*' => 'exists:users,id',
             'completed' => 'required|string'
         ]);
 
         // Update the task with the new input data
-        $task->update($request->all());
+        //$task->update($request->all());
 
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+        $task->update([
+            'task_name' => $request->input('task_name'),
+            'description' => $request->input('description'),
+            'priority' => $request->input('priority'),
+            'due_date' => $request->input('due_date'),
+            'completed' => $request->input('completed')
+        ]);
+
+        // Sync the assigned users for the task
+        $task->users()->sync($request->input('assigned_to'));
+
+        return redirect()->route('dashboard')->with('success', 'Task updated successfully');
     }
 
     // Delete an existing task from the database
