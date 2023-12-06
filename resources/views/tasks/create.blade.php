@@ -35,7 +35,7 @@
                 
                 <div class="form-group">
                     <label for="due_date">Due date</label>
-                    <input type="date" name="due_date" class="form-control"/>
+                    <input type="datetime-local" name="due_date" class="form-control"/> <!--Include full date and time-->
                     @if($errors->has('due_date'))
                     <span class="text-danger">{{ $errors->first('due_date') }}</span>
                     @endif
