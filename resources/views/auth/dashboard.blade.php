@@ -72,8 +72,8 @@
                 <li class="nav-item">
                     <div class="nav-item dropdown">
                         <span class="nav-link user-dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span style="color: black;">{{ Auth::user()->employee_id }}</span>
                             <img src="user.jpg" width="30px" height="30px" alt="user-icon">
-                            {{ Auth::user()->employee_id }}
                         </span>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
